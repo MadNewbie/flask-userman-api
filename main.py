@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+from os import environ
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ app.config.from_object(__name__)
 
 CORS(app, resources={r"/*":{'origins':"*"}})
 
-client = MongoClient('localhost', 27017)
+client = MongoClient(environ.get('DB_URI'), 27017)
 
 db = client.user_database
 users = db.users
